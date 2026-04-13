@@ -6,252 +6,537 @@
   <title>MasterZ</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f4f8;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    .phone {
-      background: white;
-      width: 340px;
-      border-radius: 24px;
-      padding: 24px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    }
-
-    @media (min-width: 768px) {
-      .phone {
-        width: 700px;
-        padding: 32px;
-      }
-    }
-
-    /* --- מסכים --- */
-    .screen { display: none; }
-    .screen.active { display: block; }
-
-    /* --- מסך בית --- */
-    .header {
-      background: #E1F5EE;
-      border-radius: 12px;
-      padding: 16px;
-      text-align: center;
-      margin-bottom: 16px;
-    }
-    .header h1 { font-size: 22px; color: #085041; }
-    .header p { font-size: 13px; color: #0F6E56; margin-top: 4px; }
-
-    .score-row { display: flex; gap: 8px; margin-bottom: 16px; }
-    .score-box {
-      flex: 1;
-      background: #f0f4f8;
-      border-radius: 8px;
-      padding: 10px;
-      text-align: center;
-    }
-    .score-box span { display: block; font-size: 20px; font-weight: bold; color: #1a1a1a; }
-    .score-box small { font-size: 11px; color: #888; }
-
-    .subject-btn {
-      width: 100%;
-      border: none;
-      border-radius: 12px;
-      padding: 16px;
-      text-align: right;
-      cursor: pointer;
-      margin-bottom: 10px;
-    }
-    .subject-btn span { display: block; font-size: 15px; font-weight: bold; }
-    .subject-btn small { font-size: 12px; }
-
-    .btn-math { background: #E6F1FB; }
-    .btn-math span { color: #0C447C; }
-    .btn-math small { color: #185FA5; }
-
-    .btn-eng { background: #EEEDFE; }
-    .btn-eng span { color: #3C3489; }
-    .btn-eng small { color: #534AB7; }
-
-    .progress-bar-bg { background: #e0e0e0; border-radius: 4px; height: 6px; }
-    .progress-bar-fill { background: #1D9E75; border-radius: 4px; height: 6px; width: 60%; }
-    .progress-label { font-size: 10px; color: #888; text-align: center; margin-top: 6px; }
-
-    /* --- מסך נושאים --- */
-    .top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
-    }
-    .back-btn {
-      background: #f0f4f8;
-      border: none;
-      border-radius: 8px;
-      padding: 6px 12px;
-      font-size: 12px;
-      cursor: pointer;
-      color: #555;
-    }
-    .screen-title { font-size: 15px; font-weight: bold; color: #1a1a1a; }
-
-    .tab-row { display: flex; gap: 6px; margin-bottom: 14px; }
-    .tab {
-      flex: 1;
-      text-align: center;
-      padding: 8px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: bold;
-      cursor: pointer;
-      border: none;
-    }
-    .tab-active-math { background: #E6F1FB; color: #0C447C; }
-    .tab-inactive { background: #f0f4f8; color: #888; }
-    .tab-active-eng { background: #EEEDFE; color: #3C3489; }
-
-    .topics-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-
-    @media (min-width: 768px) {
-      .topics-grid {
-        grid-template-columns: 1fr 1fr 1fr;
-      }
-    }
-
-    .topic-card {
-      border-radius: 8px;
-      padding: 12px;
-      cursor: pointer;
-      border: none;
-      text-align: right;
-    }
-    .topic-card .t-name { font-size: 13px; font-weight: bold; }
-    .topic-card .t-count { font-size: 11px; margin-top: 3px; }
-
-    .topic-math { background: #E6F1FB; }
-    .topic-math .t-name { color: #0C447C; }
-    .topic-math .t-count { color: #185FA5; }
-
-    .topic-eng { background: #EEEDFE; }
-    .topic-eng .t-name { color: #3C3489; }
-    .topic-eng .t-count { color: #534AB7; }
+    body { font-family: Arial, sans-serif; background: #f0f4f8; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; }
+    .app { background: white; width: 100%; min-height: 100vh; padding: 24px; }
+    @media (min-width: 600px) { body { align-items: center; padding: 24px; } .app { max-width: 560px; min-height: auto; border-radius: 24px; padding: 32px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); } }
+    @media (min-width: 1024px) { .app { max-width: 820px; padding: 48px; } }
+    .screen { display: none; } .screen.active { display: block; }
+    .header { background: #E1F5EE; border-radius: 14px; padding: 20px; text-align: center; margin-bottom: 20px; }
+    .header h1 { font-size: 28px; color: #085041; } .header p { font-size: 14px; color: #0F6E56; margin-top: 6px; }
+    .score-row { display: flex; gap: 12px; margin-bottom: 20px; }
+    .score-box { flex: 1; background: #f0f4f8; border-radius: 10px; padding: 14px; text-align: center; }
+    .score-box span { display: block; font-size: 24px; font-weight: bold; color: #1a1a1a; }
+    .score-box small { font-size: 12px; color: #888; }
+    .subject-btn { width: 100%; border: none; border-radius: 14px; padding: 20px 24px; text-align: right; cursor: pointer; margin-bottom: 12px; transition: opacity 0.15s; }
+    .subject-btn:hover { opacity: 0.85; }
+    .subject-btn span { display: block; font-size: 18px; font-weight: bold; }
+    .subject-btn small { font-size: 13px; margin-top: 2px; display: block; }
+    .btn-math { background: #E6F1FB; } .btn-math span { color: #0C447C; } .btn-math small { color: #185FA5; }
+    .btn-eng { background: #EEEDFE; } .btn-eng span { color: #3C3489; } .btn-eng small { color: #534AB7; }
+    .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+    .back-btn { background: #f0f4f8; border: none; border-radius: 8px; padding: 8px 16px; font-size: 13px; cursor: pointer; color: #555; }
+    .back-btn:hover { background: #e0e4e8; }
+    .screen-title { font-size: 18px; font-weight: bold; color: #1a1a1a; }
+    .tab-row { display: flex; gap: 8px; margin-bottom: 18px; }
+    .tab { flex: 1; text-align: center; padding: 10px; border-radius: 10px; font-size: 14px; font-weight: bold; cursor: pointer; border: none; }
+    .tab-active-math { background: #E6F1FB; color: #0C447C; } .tab-inactive { background: #f0f4f8; color: #888; } .tab-active-eng { background: #EEEDFE; color: #3C3489; }
+    .topics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (min-width: 600px) { .topics-grid { grid-template-columns: 1fr 1fr 1fr; } }
+    @media (min-width: 1024px) { .topics-grid { grid-template-columns: 1fr 1fr 1fr 1fr; } }
+    .topic-card { border-radius: 10px; padding: 14px; cursor: pointer; border: none; text-align: right; transition: opacity 0.15s; }
+    .topic-card:hover { opacity: 0.8; }
+    .topic-card .t-name { font-size: 13px; font-weight: bold; } .topic-card .t-level { font-size: 11px; margin-top: 4px; }
+    .topic-card .t-prog { height: 4px; border-radius: 2px; margin-top: 6px; background: rgba(0,0,0,0.1); }
+    .topic-card .t-prog-fill { height: 4px; border-radius: 2px; transition: width 0.4s; }
+    .topic-math { background: #E6F1FB; } .topic-math .t-name { color: #0C447C; } .topic-math .t-level { color: #185FA5; } .topic-math .t-prog-fill { background: #0C447C; }
+    .topic-eng { background: #EEEDFE; } .topic-eng .t-name { color: #3C3489; } .topic-eng .t-level { color: #534AB7; } .topic-eng .t-prog-fill { background: #3C3489; }
+    .exercise-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .exercise-counter { background: #E6F1FB; color: #0C447C; font-size: 13px; font-weight: bold; padding: 6px 14px; border-radius: 8px; }
+    .level-badge { font-size: 12px; font-weight: bold; padding: 5px 12px; border-radius: 8px; }
+    .question-box { background: #f0f4f8; border-radius: 14px; padding: 24px; margin-bottom: 16px; text-align: center; }
+    .question-label { font-size: 13px; color: #888; margin-bottom: 10px; }
+    .question-text { font-size: 24px; font-weight: bold; color: #1a1a1a; line-height: 1.4; }
+    /* קלט טקסט + מספר */
+    .answer-row { display: flex; gap: 10px; margin-bottom: 10px; }
+    .answer-input { flex: 1; border: 2px solid #e0e0e0; border-radius: 10px; padding: 14px; font-size: 18px; text-align: center; outline: none; transition: border-color 0.2s; font-family: Arial; }
+    .answer-input:focus { border-color: #378ADD; }
+    .check-btn { background: #E6F1FB; border: none; border-radius: 10px; padding: 14px 24px; font-size: 16px; font-weight: bold; color: #0C447C; cursor: pointer; }
+    .check-btn:hover { opacity: 0.85; }
+    /* בחירה מרובה לאנגלית */
+    .choices-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    .choice-btn { border: 2px solid #e0e0e0; background: white; border-radius: 12px; padding: 14px; font-size: 15px; font-weight: bold; cursor: pointer; transition: all 0.15s; color: #1a1a1a; }
+    .choice-btn:hover { background: #f0f4f8; border-color: #aaa; }
+    .choice-btn.correct { background: #E1F5EE; border-color: #1D9E75; color: #085041; }
+    .choice-btn.wrong { background: #FCEBEB; border-color: #E24B4A; color: #A32D2D; }
+    .help-row { display: flex; gap: 8px; margin-bottom: 14px; }
+    .help-btn { flex: 1; border: none; border-radius: 10px; padding: 11px; font-size: 13px; font-weight: bold; cursor: pointer; }
+    .help-btn:hover { opacity: 0.8; }
+    .btn-teach { background: #FAEEDA; color: #633806; } .btn-hint { background: #f0f4f8; color: #555; } .btn-skip { background: #f0f4f8; color: #555; }
+    .result-box { border-radius: 12px; padding: 16px; margin-bottom: 12px; display: none; }
+    .result-box.correct { background: #E1F5EE; } .result-box.wrong { background: #FCEBEB; }
+    .result-title { font-size: 15px; font-weight: bold; margin-bottom: 6px; }
+    .result-box.correct .result-title { color: #085041; } .result-box.wrong .result-title { color: #A32D2D; }
+    .result-text { font-size: 13px; line-height: 1.6; }
+    .result-box.correct .result-text { color: #0F6E56; } .result-box.wrong .result-text { color: #791F1F; }
+    .tip-box { background: #FAEEDA; border-radius: 10px; padding: 12px; margin-bottom: 12px; display: none; }
+    .tip-label { font-size: 11px; font-weight: bold; color: #633806; margin-bottom: 4px; }
+    .tip-text { font-size: 13px; color: #854F0B; line-height: 1.5; }
+    .next-btn { width: 100%; background: #1D9E75; border: none; border-radius: 12px; padding: 16px; font-size: 16px; font-weight: bold; color: white; cursor: pointer; display: none; }
+    .next-btn:hover { opacity: 0.85; }
+    .ex-prog-bg { background: #e0e0e0; border-radius: 4px; height: 6px; margin-bottom: 20px; }
+    .ex-prog-fill { background: #378ADD; border-radius: 4px; height: 6px; transition: width 0.4s; }
+    .levelup-box { background: #FAEEDA; border-radius: 14px; padding: 20px; text-align: center; margin-bottom: 14px; display: none; animation: pop 0.4s ease; }
+    @keyframes pop { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    .levelup-emoji { font-size: 40px; margin-bottom: 8px; }
+    .levelup-title { font-size: 20px; font-weight: bold; color: #633806; margin-bottom: 4px; }
+    .levelup-sub { font-size: 14px; color: #854F0B; }
+    .teach-banner { background: #FAEEDA; border-radius: 14px; padding: 16px 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 14px; }
+    .teach-icon { font-size: 32px; }
+    .teach-banner-title { font-size: 17px; font-weight: bold; color: #633806; }
+    .teach-banner-sub { font-size: 13px; color: #854F0B; margin-top: 3px; }
+    .steps-container { margin-bottom: 20px; }
+    .step-card { border-radius: 12px; padding: 16px; margin-bottom: 10px; opacity: 0; transform: translateY(16px); transition: all 0.4s ease; border-right: 4px solid transparent; }
+    .step-card.visible { opacity: 1; transform: translateY(0); }
+    .step-num-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .step-num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: bold; flex-shrink: 0; }
+    .step-title { font-size: 14px; font-weight: bold; }
+    .step-body { font-size: 13px; line-height: 1.7; padding-right: 38px; }
+    .step-formula { font-size: 18px; font-weight: bold; text-align: center; padding: 12px; border-radius: 8px; margin-top: 8px; }
+    .step-1 { background: #E1F5EE; border-right-color: #1D9E75; } .step-1 .step-num { background: #9FE1CB; color: #085041; } .step-1 .step-title { color: #085041; } .step-1 .step-body { color: #0F6E56; } .step-1 .step-formula { background: #9FE1CB; color: #04342C; }
+    .step-2 { background: #E6F1FB; border-right-color: #378ADD; } .step-2 .step-num { background: #85B7EB; color: #042C53; } .step-2 .step-title { color: #0C447C; } .step-2 .step-body { color: #185FA5; } .step-2 .step-formula { background: #85B7EB; color: #042C53; }
+    .step-3 { background: #FAEEDA; border-right-color: #EF9F27; } .step-3 .step-num { background: #FAC775; color: #412402; } .step-3 .step-title { color: #633806; } .step-3 .step-body { color: #854F0B; } .step-3 .step-formula { background: #FAC775; color: #412402; }
+    .step-4 { background: #EEEDFE; border-right-color: #7F77DD; } .step-4 .step-num { background: #AFA9EC; color: #26215C; } .step-4 .step-title { color: #3C3489; } .step-4 .step-body { color: #534AB7; } .step-4 .step-formula { background: #AFA9EC; color: #26215C; }
+    .example-box { background: #f0f4f8; border-radius: 12px; padding: 16px; margin-bottom: 20px; }
+    .example-label { font-size: 11px; font-weight: bold; color: #888; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .example-line { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 14px; }
+    .example-arrow { color: #888; font-size: 16px; }
+    .example-eq { font-weight: bold; color: #1a1a1a; font-size: 15px; }
+    .try-btn { width: 100%; background: #1D9E75; border: none; border-radius: 12px; padding: 16px; font-size: 16px; font-weight: bold; color: white; cursor: pointer; }
+    .try-btn:hover { opacity: 0.85; }
   </style>
 </head>
 <body>
-
-<div class="phone">
+<div class="app">
 
   <!-- מסך 1: בית -->
   <div class="screen active" id="screen-home">
-    <div class="header">
-      <h1>MasterZ</h1>
-      <p>שלום! מה נתרגל היום?</p>
-    </div>
-
+    <div class="header"><h1>MasterZ</h1><p>שלום! מה נתרגל היום?</p></div>
     <div class="score-row">
-      <div class="score-box">
-        <span id="score">0</span>
-        <small>נקודות</small>
-      </div>
-      <div class="score-box">
-        <span>רמה 1</span>
-        <small>מתחיל</small>
-      </div>
+      <div class="score-box"><span id="score-display">0</span><small>נקודות כולל</small></div>
+      <div class="score-box"><span id="topics-done">0</span><small>נושאים הושלמו</small></div>
     </div>
-
-    <button class="subject-btn btn-math" onclick="goTo('screen-topics', 'math')">
-      <span>מתמטיקה</span>
-      <small>10 נושאים</small>
+    <button class="subject-btn btn-math" onclick="goTo('screen-topics','math')">
+      <span>מתמטיקה</span><small>10 נושאים · 5 רמות כל אחד</small>
     </button>
-
-    <button class="subject-btn btn-eng" onclick="goTo('screen-topics', 'eng')">
-      <span>אנגלית</span>
-      <small>8 נושאים</small>
+    <button class="subject-btn btn-eng" onclick="goTo('screen-topics','eng')">
+      <span>אנגלית</span><small>8 נושאים · 5 רמות כל אחד</small>
     </button>
-
-    <div style="margin-top: 16px;">
-      <div class="progress-bar-bg">
-        <div class="progress-bar-fill"></div>
-      </div>
-      <p class="progress-label">עוד 100 נק׳ לרמה 2</p>
-    </div>
   </div>
 
-  <!-- מסך 2: בחירת נושא -->
+  <!-- מסך 2: נושאים -->
   <div class="screen" id="screen-topics">
     <div class="top-bar">
       <button class="back-btn" onclick="goTo('screen-home')">→ חזרה</button>
       <p class="screen-title">בחר נושא</p>
     </div>
-
     <div class="tab-row">
       <button class="tab" id="tab-math" onclick="switchTab('math')">מתמטיקה</button>
       <button class="tab" id="tab-eng" onclick="switchTab('eng')">אנגלית</button>
     </div>
-
     <div class="topics-grid" id="topics-grid"></div>
   </div>
 
+  <!-- מסך 3: תרגיל -->
+  <div class="screen" id="screen-exercise">
+    <div class="top-bar">
+      <button class="back-btn" onclick="goTo('screen-topics')">→ חזרה</button>
+      <p class="screen-title" id="ex-title">משוואות</p>
+    </div>
+    <div class="ex-prog-bg"><div class="ex-prog-fill" id="ex-progress" style="width:0%"></div></div>
+    <div class="exercise-header">
+      <span class="level-badge" id="level-badge">רמה 1 — קל</span>
+      <span class="exercise-counter" id="ex-counter">שאלה 1 / 10</span>
+    </div>
+    <div class="levelup-box" id="levelup-box">
+      <div class="levelup-emoji">🎉</div>
+      <p class="levelup-title" id="levelup-title">עלית רמה!</p>
+      <p class="levelup-sub" id="levelup-sub"></p>
+    </div>
+    <div class="question-box">
+      <p class="question-label" id="question-label">פתור את השאלה:</p>
+      <p class="question-text" id="question-text"></p>
+    </div>
+    <!-- קלט מספרי למתמטיקה -->
+    <div id="math-input-area">
+      <div class="answer-row">
+        <input class="answer-input" id="answer-input" type="number" placeholder="התשובה שלך..." />
+        <button class="check-btn" onclick="checkAnswer()">בדוק</button>
+      </div>
+    </div>
+    <!-- בחירה מרובה לאנגלית -->
+    <div id="eng-choices-area" style="display:none;">
+      <div class="choices-grid" id="choices-grid"></div>
+    </div>
+    <div class="help-row">
+      <button class="help-btn btn-teach" onclick="openTeach()">למד אותי</button>
+      <button class="help-btn btn-hint" onclick="showHint()">רמז</button>
+      <button class="help-btn btn-skip" onclick="skipQuestion()">דלג</button>
+    </div>
+    <div class="result-box" id="result-box">
+      <p class="result-title" id="result-title"></p>
+      <p class="result-text" id="result-text"></p>
+    </div>
+    <div class="tip-box" id="tip-box">
+      <p class="tip-label">רמז:</p>
+      <p class="tip-text" id="tip-text"></p>
+    </div>
+    <button class="next-btn" id="next-btn" onclick="nextQuestion()">השאלה הבאה ←</button>
+  </div>
+
+  <!-- מסך 4: למד אותי -->
+  <div class="screen" id="screen-teach">
+    <div class="top-bar">
+      <button class="back-btn" onclick="goTo('screen-exercise')">→ חזרה לתרגיל</button>
+      <p class="screen-title">איך פותרים?</p>
+    </div>
+    <div class="teach-banner">
+      <div class="teach-icon" id="teach-icon">🧠</div>
+      <div>
+        <p class="teach-banner-title" id="teach-banner-title"></p>
+        <p class="teach-banner-sub" id="teach-banner-sub"></p>
+      </div>
+    </div>
+    <div id="sentence-example-box" style="display:none;background:#E6F1FB;border-radius:12px;padding:16px;margin-bottom:16px;">
+      <p style="font-size:11px;font-weight:bold;color:#185FA5;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">משפט עם המילה:</p>
+      <p id="sentence-text" style="font-size:16px;color:#0C447C;line-height:1.6;font-style:italic;"></p>
+    </div>
+    <div class="steps-container" id="steps-container"></div>
+    <div class="example-box" id="example-box"></div>
+    <button class="try-btn" onclick="goTo('screen-exercise')">בסדר, בוא נתרגל!</button>
+  </div>
+
 </div>
-
 <script>
-  const mathTopics = [
-    "משוואות", "שברים", "אחוזים", "יחס ופרופורציה",
-    "שלמים שליליים", "אלגברה", "גיאומטריה", "סטטיסטיקה",
-    "שטח והיקף", "חזקות"
+const mathTopics = ["משוואות","שברים","אחוזים","יחס ופרופורציה","שלמים שליליים","אלגברה","גיאומטריה","סטטיסטיקה","שטח והיקף","חזקות"];
+const engTopics = ["אוצר מילים","Present Simple","Past Simple","Future Tense","מילות שאלה","הבנת הנקרא","כתיבה יצירתית","דקדוק"];
+const levelNames = ["קל","בינוני","קשה","גאון","על-אנושי"];
+const levelColors = [
+  {bg:"#EAF3DE",color:"#27500A"},{bg:"#E6F1FB",color:"#0C447C"},
+  {bg:"#FAEEDA",color:"#633806"},{bg:"#EEEDFE",color:"#3C3489"},{bg:"#FAECE7",color:"#712B13"}
+];
+const CORRECT_TO_LEVEL_UP = 10;
+
+const progress = {};
+[...mathTopics,...engTopics].forEach(t => { progress[t] = {level:0, correct:0, totalScore:0}; });
+
+let currentTab = 'math';
+let totalScore = 0;
+let questionNum = 0;
+let currentQuestion = null;
+let currentTopic = '';
+let isEngTopic = false;
+
+// --- שאלות מתמטיקה ---
+function generateMathQuestion(topic, level) {
+  const a = Math.floor(Math.random() * (level+1) * 3) + 1;
+  const b = Math.floor(Math.random() * (level+1) * 3) + 1;
+  const templates = {
+    "משוואות": [
+      {q:`2x + ${b} = ${2*a+b}`, answer:a, hint:`העבר ${b} לצד: 2x = ${2*a}`, explanation:`2x = ${2*a+b}-${b} = ${2*a}, לכן x = ${a}`},
+      {q:`x - ${b} = ${a}`, answer:a+b, hint:`הוסף ${b} לשני הצדדים`, explanation:`x = ${a}+${b} = ${a+b}`},
+      {q:`${b}x = ${b*a}`, answer:a, hint:`חלק ב-${b}`, explanation:`x = ${b*a}÷${b} = ${a}`}
+    ],
+    "אחוזים": [
+      {q:`כמה זה ${(level+1)*10}% מ-${b*10}?`, answer:Math.round((level+1)*b), hint:`חלק ב-100 ואז כפל`, explanation:`${(level+1)*10}/100 × ${b*10} = ${Math.round((level+1)*b)}`},
+      {q:`${a*10} זה כמה % מ-${a*100}?`, answer:10, hint:`חלק ב-10 וכפל ב-100`, explanation:`${a*10}/${a*100} × 100 = 10%`}
+    ],
+    "שלמים שליליים": [
+      {q:`-${a} + ${a+b} = ?`, answer:b, hint:`ציר מספרים`, explanation:`-${a}+${a+b} = ${b}`},
+      {q:`-${a} - ${b} = ?`, answer:-(a+b), hint:`שני מינוסים`, explanation:`-${a}-${b} = -${a+b}`}
+    ]
+  };
+  const pool = templates[topic] || [
+    {q:`${a} × ${b} = ?`, answer:a*b, hint:`כפל פשוט`, explanation:`${a}×${b} = ${a*b}`},
+    {q:`${a*b} ÷ ${b} = ?`, answer:a, hint:`חילוק הפוך מכפל`, explanation:`${a*b}÷${b} = ${a}`},
+    {q:`${a} + ${b} + ${a+1} = ?`, answer:2*a+b+1, hint:`חבר הכל`, explanation:`${a}+${b}+${a+1} = ${2*a+b+1}`}
   ];
+  const q = pool[Math.floor(Math.random() * pool.length)];
+  q.type = 'math';
+  return q;
+}
 
-  const engTopics = [
-    "אוצר מילים", "Present Simple", "Past Simple", "Future Tense",
-    "מילות שאלה", "הבנת הנקרא", "כתיבה יצירתית", "דקדוק"
-  ];
+// --- שאלות אנגלית ---
+const engQuestions = {
+  "אוצר מילים": [
+    {q:"מה המשמעות של: Enormous?", choices:["קטן","ענק","מהיר","חכם"], answer:"ענק", hint:"זה מתאר משהו גדול מאוד", explanation:"Enormous = ענק, גדול מאוד", sentence:"The enormous elephant could not fit through the door."},
+    {q:"מה המשמעות של: Ancient?", choices:["חדש","עתיק","יפה","חזק"], answer:"עתיק", hint:"זה מתאר משהו ישן מאוד", explanation:"Ancient = עתיק, ישן מאוד", sentence:"The ancient pyramid was built thousands of years ago."},
+    {q:"מה המשמעות של: Brave?", choices:["פחדן","אמיץ","עצוב","שמח"], answer:"אמיץ", hint:"גיבורים הם כאלה", explanation:"Brave = אמיץ", sentence:"The brave firefighter ran into the burning building."},
+    {q:"מה המשמעות של: Curious?", choices:["עייף","סקרן","כועס","שקט"], answer:"סקרן", hint:"מי שאוהב ללמוד הוא כזה", explanation:"Curious = סקרן", sentence:"The curious student asked many questions in class."},
+    {q:"מה המשמעות של: Clever?", choices:["חכם","גבוה","מהיר","עצוב"], answer:"חכם", hint:"מי שפותר בעיות בקלות", explanation:"Clever = חכם, פיקח", sentence:"She was so clever that she solved the puzzle in two minutes."},
+    {q:"מה המשמעות של: Frightened?", choices:["שמח","מפוחד","עייף","רעב"], answer:"מפוחד", hint:"איך מרגישים כשרואים משהו מפחיד?", explanation:"Frightened = מפוחד", sentence:"The frightened cat hid under the bed during the storm."},
+    {q:"מה המשמעות של: Delicious?", choices:["מגעיל","טעים","חם","קר"], answer:"טעים", hint:"איך אומרים על אוכל טוב?", explanation:"Delicious = טעים, מעדן", sentence:"The pizza was so delicious that I ate three slices."},
+    {q:"מה המשמעות של: Exhausted?", choices:["אנרגטי","עייף מאוד","שמח","בריא"], answer:"עייף מאוד", hint:"יותר מ-tired", explanation:"Exhausted = מותש, עייף מאוד", sentence:"After running the marathon, she was completely exhausted."},
+  ],
+  "Present Simple": [
+    {q:"בחר את המשפט הנכון:", choices:["She go to school","She goes to school","She going to school","She goed to school"], answer:"She goes to school", hint:"גוף שלישי יחיד מקבל s", explanation:"בגוף שלישי יחיד (he/she/it) מוסיפים s לפועל", sentence:"She goes to school every morning at 8 o'clock."},
+    {q:"השלם: He ___ football every day.", choices:["play","plays","playing","played"], answer:"plays", hint:"he = גוף שלישי יחיד", explanation:"He plays — גוף שלישי יחיד מקבל s", sentence:"He plays football every day after school with his friends."},
+    {q:"השלם: They ___ pizza.", choices:["likes","like","liking","liked"], answer:"like", hint:"they = רבים, בלי s", explanation:"They like — רבים לא מקבלים s", sentence:"They like pizza every Friday night for dinner."},
+    {q:"איך שואלים שאלה ב-Present Simple?", choices:["Does she likes?","Does she like?","Do she likes?","Is she like?"], answer:"Does she like?", hint:"Does + גוף שלישי + פועל ללא s", explanation:"Does she like? — עם does הפועל חוזר לצורה הבסיסית", sentence:"Does she like chocolate ice cream or vanilla?"},
+  ],
+  "Past Simple": [
+    {q:"מה צורת העבר של: go?", choices:["goed","went","gone","goes"], answer:"went", hint:"זו פועל לא סדיר", explanation:"Go → Went (עבר לא סדיר)", sentence:"Yesterday I went to the park with my dog."},
+    {q:"מה צורת העבר של: play?", choices:["plaied","playes","played","play"], answer:"played", hint:"פועל סדיר מקבל ed", explanation:"Play → Played (עבר סדיר, מוסיפים ed)", sentence:"We played basketball at school last Tuesday."},
+    {q:"בחר את המשפט הנכון:", choices:["She catched the ball","She catch the ball","She caught the ball","She catches the ball"], answer:"She caught the ball", hint:"catch הוא פועל לא סדיר", explanation:"Catch → Caught (עבר לא סדיר)", sentence:"She caught the ball perfectly and scored a point."},
+    {q:"מה צורת העבר של: eat?", choices:["eated","ate","eaten","eats"], answer:"ate", hint:"פועל לא סדיר", explanation:"Eat → Ate (עבר לא סדיר)", sentence:"He ate a huge sandwich for lunch yesterday."},
+  ],
+  "Future Tense": [
+    {q:"איך אומרים עתיד באנגלית?", choices:["She go tomorrow","She will go tomorrow","She going tomorrow","She goes tomorrow"], answer:"She will go tomorrow", hint:"משתמשים ב-will", explanation:"עתיד = will + פועל בצורה הבסיסית", sentence:"She will go to the cinema tomorrow evening with her friends."},
+    {q:"השלם: Tomorrow I ___ my homework.", choices:["will do","will does","will doing","does"], answer:"will do", hint:"will + פועל בסיסי", explanation:"will do — אחרי will הפועל תמיד בצורה הבסיסית", sentence:"Tomorrow I will do my homework right after dinner."},
+    {q:"מה המשמעות של: I won't go?", choices:["אני אלך","אני לא אלך","אני הלכתי","אני הולך"], answer:"אני לא אלך", hint:"won't = will not", explanation:"Won't = will not = שלילה בעתיד", sentence:"I won't go to the party because I feel sick today."},
+  ],
+  "מילות שאלה": [
+    {q:"איזו מילת שאלה שואלת על מקום?", choices:["When","Who","Where","Why"], answer:"Where", hint:"Where are you? — שאלה על מיקום", explanation:"Where = איפה (מקום)", sentence:"Where are you going after school today?"},
+    {q:"איזו מילת שאלה שואלת על זמן?", choices:["Where","When","Who","How"], answer:"When", hint:"When is your birthday?", explanation:"When = מתי (זמן)", sentence:"When is your birthday? Mine is in April!"},
+    {q:"איזו מילת שאלה שואלת על אדם?", choices:["What","Where","Who","Which"], answer:"Who", hint:"Who are you?", explanation:"Who = מי (אדם)", sentence:"Who is your favorite teacher at school?"},
+    {q:"השלם: ___ is your name?", choices:["Who","Where","What","When"], answer:"What", hint:"שואלים על שם", explanation:"What is your name? = מה שמך?", sentence:"What is your name? My name is David."},
+  ],
+  "הבנת הנקרא": [
+    {q:"'The dog is big and brown.' — איזה צבע הכלב?", choices:["שחור","חום","לבן","אדום"], answer:"חום", hint:"חפש את המילה שמתארת צבע", explanation:"Brown = חום. המשפט אומר: הכלב גדול וחום", sentence:"The dog is big and brown — הכלב הוא גדול וחום."},
+    {q:"'She is very tired because she worked all day.' — למה היא עייפה?", choices:["כי היא חולה","כי עבדה כל היום","כי לא ישנה","כי רצה"], answer:"כי עבדה כל היום", hint:"חפש את המילה because", explanation:"Because = כי. היא עייפה כי עבדה כל היום", sentence:"She is very tired because she worked all day — היא עייפה כי עבדה כל היום."},
+    {q:"'Tom has two cats and one dog.' — כמה חתולים יש לטום?", choices:["אחד","שלושה","שניים","אפס"], answer:"שניים", hint:"two = כמה?", explanation:"Two = שניים. יש לטום שני חתולים", sentence:"Tom has two cats and one dog — לטום יש שני חתולים וכלב אחד."},
+  ],
+  "דקדוק": [
+    {q:"מה צורת הרבים של: child?", choices:["childs","children","childes","child"], answer:"children", hint:"זה לא סדיר — לא מוסיפים s", explanation:"Child → Children (רבים לא סדיר)", sentence:"The children played happily in the park all afternoon."},
+    {q:"בחר את הנכון: She is ___ than her sister.", choices:["tall","taller","tallest","more tall"], answer:"taller", hint:"השוואה בין שניים = er", explanation:"השוואה בין שניים: tall → taller", sentence:"She is taller than her sister by five centimeters."},
+    {q:"מה צורת הרבים של: tooth?", choices:["tooths","teeth","toothes","tooth"], answer:"teeth", hint:"לא סדיר — כמו foot/feet", explanation:"Tooth → Teeth (רבים לא סדיר)", sentence:"The dentist said my teeth are very healthy and clean."},
+    {q:"בחר הנכון: This is ___ book I have.", choices:["good","better","the best","more good"], answer:"the best", hint:"סופרלטיב — הכי טוב מכולם", explanation:"הכי... = the + est: good → the best", sentence:"This is the best book I have ever read in my life!"},
+  ],
+  "כתיבה יצירתית": [
+    {q:"איזו מילה מתאימה להתחיל סיפור?", choices:["However","Once upon a time","Therefore","Meanwhile"], answer:"Once upon a time", hint:"פתיחה קלאסית לסיפור", explanation:"Once upon a time = היה היה — פתיחה קלאסית", sentence:"Once upon a time, a brave boy discovered a hidden treasure in the forest."},
+    {q:"איזו מילה מחברת בין שתי סיבות?", choices:["but","because","although","however"], answer:"because", hint:"מסביר למה", explanation:"Because = כי, כיוון ש — מסביר סיבה", sentence:"I stayed home because it was raining heavily outside."},
+    {q:"איזה מילה מביעה ניגוד?", choices:["and","because","but","so"], answer:"but", hint:"הפוך מ-and", explanation:"But = אבל — מביע ניגוד", sentence:"I wanted to go outside, but it was too cold and windy."},
+  ]
+};
 
-  let currentTab = 'math';
+function generateEngQuestion(topic) {
+  const pool = engQuestions[topic] || engQuestions["אוצר מילים"];
+  const q = pool[Math.floor(Math.random() * pool.length)];
+  return { ...q, type: 'eng' };
+}
 
-  function goTo(screenId, tab) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(screenId).classList.add('active');
-    if (tab) {
-      currentTab = tab;
-      renderTopics();
-      updateTabs();
-    }
+const teachings = {
+  "משוואות": { icon:"⚖️", sub:"משוואה היא כמו מאזניים — שני הצדדים שווים",
+    steps:[{title:"מה זו משוואה?",body:"משוואה היא שאלה עם x — מספר שצריך לגלות.",formula:"2x + 4 = 10"},{title:"מעבירים לצד",body:"רוצים ש-x יישאר לבד. מעבירים את המספרים — הסימן מתהפך!",formula:"2x = 10 - 4 = 6"},{title:"מחלקים",body:"אם יש מספר לפני x — מחלקים את שני הצדדים.",formula:"x = 6 ÷ 2 = 3"},{title:"בודקים!",body:"מציבים בחזרה ובודקים.",formula:"2×3 + 4 = 10 ✓"}],
+    example:{label:"דוגמה: 3x - 6 = 9",lines:["3x = 9 + 6 = 15","x = 15 ÷ 3 = 5","3×5 - 6 = 9 ✓"]}
+  },
+  "Present Simple": { icon:"📅", sub:"Present Simple = דברים שקורים תמיד או כל יום",
+    steps:[{title:"מתי משתמשים?",body:"לדברים שקורים כל יום, תמיד, או בדרך כלל.",formula:"I eat breakfast every day"},{title:"גוף שלישי יחיד",body:"כשמדברים על he/she/it — מוסיפים s לפועל!",formula:"He eats, She plays, It runs"},{title:"שלילה",body:"משתמשים ב-don't או doesn't",formula:"I don't like. She doesn't like."},{title:"שאלה",body:"Do / Does בתחילת המשפט",formula:"Do you like? Does she like?"}],
+    example:{label:"דוגמה:",lines:["I play football — אני משחק כדורגל","She plays football — היא משחקת כדורגל","They play football — הם משחקים כדורגל"]}
+  },
+  "Past Simple": { icon:"⏪", sub:"Past Simple = דברים שקרו בעבר וכבר הסתיימו",
+    steps:[{title:"מתי משתמשים?",body:"לדברים שקרו בעבר ונגמרו.",formula:"Yesterday I played football"},{title:"פעלים סדירים",body:"מוסיפים ed לסוף הפועל.",formula:"play→played, watch→watched"},{title:"פעלים לא סדירים",body:"חייבים לזכור אותם בעל פה!",formula:"go→went, eat→ate, see→saw"},{title:"שלילה",body:"משתמשים ב-didn't + פועל בסיסי",formula:"I didn't go. She didn't eat."}],
+    example:{label:"דוגמאות:",lines:["I walked to school","She ate pizza","They didn't watch TV"]}
+  },
+  "אוצר מילים": { icon:"📚", sub:"ככל שיש לך יותר מילים — כך אתה מדבר טוב יותר!",
+    steps:[{title:"איך לומדים מילים?",body:"קושרים כל מילה לתמונה או לסיפור בראש.",formula:"Enormous = ענק (תחשוב על פיל ענק)"},{title:"קבוצות נושאים",body:"לומדים מילים לפי נושא — קל יותר לזכור.",formula:"רגשות: happy, sad, angry..."},{title:"חזרה",body:"חוזרים על מילים כל יום — גם 5 דקות עוזר!",formula:"10 מילים ביום = 3,650 מילים בשנה!"},{title:"הקשר",body:"מנסים להבין מילה חדשה לפי ההקשר במשפט.",formula:"'The enormous elephant' — ענק כנראה"}],
+    example:{label:"מילים שימושיות:",lines:["Big/Large/Enormous = גדול (בדרגות)","Small/Tiny = קטן","Happy/Glad/Joyful = שמח"]}
+  },
+  "default": { icon:"💡", sub:"בוא נלמד ביחד!",
+    steps:[{title:"קוראים",body:"קוראים לאט ומבינים מה מבקשים.",formula:"מה השאלה רוצה?"},{title:"מזהים נתונים",body:"מסמנים את כל המידע שניתן.",formula:"מה יש לנו?"},{title:"בוחרים שיטה",body:"חיבור? כפל? משוואה?",formula:"איך פותרים?"},{title:"בודקים",body:"תמיד בודקים שהתשובה הגיונית!",formula:"האם זה הגיוני?"}],
+    example:{label:"טיפ:",lines:["קרא → הבן → תכנן → פתור → בדוק"]}
   }
+};
 
-  function switchTab(tab) {
-    currentTab = tab;
-    renderTopics();
-    updateTabs();
+function goTo(screenId, tab) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+  if (tab) { currentTab = tab; renderTopics(); updateTabs(); }
+  if (screenId === 'screen-topics') renderTopics();
+}
+
+function switchTab(tab) { currentTab = tab; renderTopics(); updateTabs(); }
+
+function updateTabs() {
+  document.getElementById('tab-math').className = 'tab ' + (currentTab==='math' ? 'tab-active-math' : 'tab-inactive');
+  document.getElementById('tab-eng').className = 'tab ' + (currentTab==='eng' ? 'tab-active-eng' : 'tab-inactive');
+}
+
+function renderTopics() {
+  const topics = currentTab === 'math' ? mathTopics : engTopics;
+  const cls = currentTab === 'math' ? 'topic-math' : 'topic-eng';
+  document.getElementById('topics-grid').innerHTML = topics.map(t => {
+    const p = progress[t];
+    const pct = Math.round((p.correct / CORRECT_TO_LEVEL_UP) * 100);
+    const lname = p.level >= 5 ? 'הושלם!' : `רמה ${p.level+1} — ${levelNames[p.level]}`;
+    return `<button class="topic-card ${cls}" onclick="startExercise('${t}')">
+      <p class="t-name">${t}</p>
+      <p class="t-level">${lname}</p>
+      <div class="t-prog"><div class="t-prog-fill" style="width:${pct}%"></div></div>
+    </button>`;
+  }).join('');
+}
+
+function startExercise(topic) {
+  currentTopic = topic;
+  isEngTopic = engTopics.includes(topic);
+  questionNum = 0;
+  document.getElementById('ex-title').textContent = topic;
+  document.getElementById('levelup-box').style.display = 'none';
+  goTo('screen-exercise');
+  updateLevelBadge();
+  loadQuestion();
+}
+
+function updateLevelBadge() {
+  const p = progress[currentTopic];
+  const lvl = Math.min(p.level, 4);
+  const badge = document.getElementById('level-badge');
+  badge.textContent = `רמה ${lvl+1} — ${levelNames[lvl]}`;
+  badge.style.background = levelColors[lvl].bg;
+  badge.style.color = levelColors[lvl].color;
+}
+
+function loadQuestion() {
+  questionNum++;
+  const lvl = Math.min(progress[currentTopic].level, 4);
+  currentQuestion = isEngTopic ? generateEngQuestion(currentTopic) : generateMathQuestion(currentTopic, lvl);
+
+  document.getElementById('question-text').textContent = currentQuestion.q;
+  document.getElementById('ex-counter').textContent = `שאלה ${questionNum} / 10`;
+  document.getElementById('ex-progress').style.width = ((questionNum-1)*10) + '%';
+  document.getElementById('result-box').style.display = 'none';
+  document.getElementById('tip-box').style.display = 'none';
+  document.getElementById('next-btn').style.display = 'none';
+  document.getElementById('levelup-box').style.display = 'none';
+
+  if (isEngTopic) {
+    document.getElementById('math-input-area').style.display = 'none';
+    document.getElementById('eng-choices-area').style.display = 'block';
+    document.getElementById('question-label').textContent = 'בחר את התשובה הנכונה:';
+    const shuffled = [...currentQuestion.choices].sort(() => Math.random() - 0.5);
+    document.getElementById('choices-grid').innerHTML = shuffled.map(c =>
+      `<button class="choice-btn" onclick="checkEngAnswer(this,'${c.replace(/'/g,"\\'")}')">  ${c}</button>`
+    ).join('');
+  } else {
+    document.getElementById('math-input-area').style.display = 'block';
+    document.getElementById('eng-choices-area').style.display = 'none';
+    document.getElementById('question-label').textContent = 'פתור את השאלה:';
+    document.getElementById('answer-input').value = '';
+    document.getElementById('answer-input').disabled = false;
+    document.getElementById('answer-input').style.borderColor = '#e0e0e0';
+    document.getElementById('answer-input').focus();
   }
+}
 
-  function updateTabs() {
-    document.getElementById('tab-math').className = 'tab ' + (currentTab === 'math' ? 'tab-active-math' : 'tab-inactive');
-    document.getElementById('tab-eng').className = 'tab ' + (currentTab === 'eng' ? 'tab-active-eng' : 'tab-inactive');
+function checkEngAnswer(btn, chosen) {
+  const btns = document.querySelectorAll('.choice-btn');
+  btns.forEach(b => b.disabled = true);
+  const p = progress[currentTopic];
+  const ok = chosen === currentQuestion.answer;
+  if (ok) {
+    btn.classList.add('correct');
+    totalScore += 10;
+    p.totalScore += 10;
+    p.correct++;
+    document.getElementById('score-display').textContent = totalScore;
+    showResult(true, `נכון! +10 נקודות (${p.correct}/${CORRECT_TO_LEVEL_UP} לרמה הבאה)`, currentQuestion.explanation);
+    checkLevelUp(p);
+  } else {
+    btn.classList.add('wrong');
+    btns.forEach(b => { if (b.textContent.trim() === currentQuestion.answer) b.classList.add('correct'); });
+    p.correct = Math.max(0, p.correct - 1);
+    showResult(false, `לא נכון — התשובה הנכונה: ${currentQuestion.answer}`, currentQuestion.explanation);
+    document.getElementById('tip-box').style.display = 'block';
+    document.getElementById('tip-text').textContent = currentQuestion.hint;
   }
+  document.getElementById('next-btn').style.display = 'block';
+  document.getElementById('next-btn').textContent = questionNum >= 10 ? 'סיום ← חזרה לנושאים' : 'השאלה הבאה ←';
+}
 
-  function renderTopics() {
-    const topics = currentTab === 'math' ? mathTopics : engTopics;
-    const cls = currentTab === 'math' ? 'topic-math' : 'topic-eng';
-    const grid = document.getElementById('topics-grid');
-    grid.innerHTML = topics.map(t => `
-      <button class="topic-card ${cls}">
-        <p class="t-name">${t}</p>
-        <p class="t-count">5 רמות</p>
-      </button>
-    `).join('');
+function checkAnswer() {
+  const val = parseFloat(document.getElementById('answer-input').value);
+  if (isNaN(val)) { alert('הכנס תשובה!'); return; }
+  const ok = Math.abs(val - currentQuestion.answer) < 0.01;
+  document.getElementById('answer-input').disabled = true;
+  const p = progress[currentTopic];
+  if (ok) {
+    totalScore += 10;
+    p.totalScore += 10;
+    p.correct++;
+    document.getElementById('score-display').textContent = totalScore;
+    document.getElementById('answer-input').style.borderColor = '#1D9E75';
+    showResult(true, `נכון! +10 נקודות (${p.correct}/${CORRECT_TO_LEVEL_UP} לרמה הבאה)`, currentQuestion.explanation);
+    checkLevelUp(p);
+  } else {
+    p.correct = Math.max(0, p.correct - 1);
+    document.getElementById('answer-input').style.borderColor = '#E24B4A';
+    showResult(false, `לא נכון — התשובה: ${currentQuestion.answer}`, currentQuestion.explanation);
+    document.getElementById('tip-box').style.display = 'block';
+    document.getElementById('tip-text').textContent = currentQuestion.hint;
   }
+  document.getElementById('next-btn').style.display = 'block';
+  document.getElementById('next-btn').textContent = questionNum >= 10 ? 'סיום ← חזרה לנושאים' : 'השאלה הבאה ←';
+}
 
-  updateTabs();
-  renderTopics();
+function showResult(ok, title, text) {
+  const rb = document.getElementById('result-box');
+  rb.className = 'result-box ' + (ok ? 'correct' : 'wrong');
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-text').textContent = text;
+  rb.style.display = 'block';
+}
+
+function checkLevelUp(p) {
+  if (p.correct >= CORRECT_TO_LEVEL_UP && p.level < 4) {
+    p.level++;
+    p.correct = 0;
+    document.getElementById('levelup-title').textContent = `עלית לרמה ${p.level+1} — ${levelNames[p.level]}!`;
+    document.getElementById('levelup-sub').textContent = `כל הכבוד! המשך לתרגל כדי להגיע לרמה הבאה`;
+    document.getElementById('levelup-box').style.display = 'block';
+    updateLevelBadge();
+  }
+}
+
+function nextQuestion() {
+  if (questionNum >= 10) goTo('screen-topics');
+  else loadQuestion();
+}
+
+function skipQuestion() {
+  if (document.getElementById('next-btn').style.display === 'block') return;
+  loadQuestion();
+}
+
+function showHint() {
+  if (!currentQuestion) return;
+  document.getElementById('tip-box').style.display = 'block';
+  document.getElementById('tip-text').textContent = currentQuestion.hint;
+}
+
+function openTeach() {
+  const data = teachings[currentTopic] || teachings['default'];
+  document.getElementById('teach-icon').textContent = data.icon;
+  document.getElementById('teach-banner-title').textContent = currentTopic;
+  document.getElementById('teach-banner-sub').textContent = data.sub;
+  const sentenceBox = document.getElementById('sentence-example-box');
+  if (isEngTopic && currentQuestion && currentQuestion.sentence) {
+    sentenceBox.style.display = 'block';
+    const word = currentQuestion.answer;
+    const highlighted = currentQuestion.sentence.replace(
+      new RegExp('(' + word.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'i'),
+      '<strong style="color:#0C447C;background:#E6F1FB;padding:1px 5px;border-radius:4px;">$1</strong>'
+    );
+    document.getElementById('sentence-text').innerHTML = highlighted;
+  } else {
+    sentenceBox.style.display = 'none';
+  }
+  document.getElementById('steps-container').innerHTML = data.steps.map((s,i) => `
+    <div class="step-card step-${i+1}" id="step-${i}">
+      <div class="step-num-row"><div class="step-num">${i+1}</div><p class="step-title">${s.title}</p></div>
+      <p class="step-body">${s.body}</p>
+      <div class="step-formula">${s.formula}</div>
+    </div>`).join('');
+  const ex = data.example;
+  document.getElementById('example-box').innerHTML = `
+    <p class="example-label">${ex.label}</p>
+    ${ex.lines.map((l,i) => `<div class="example-line">${i>0?'<span class="example-arrow">↓</span>':''}<span class="example-eq">${l}</span></div>`).join('')}`;
+  goTo('screen-teach');
+  data.steps.forEach((_,i) => setTimeout(() => { const el = document.getElementById('step-'+i); if(el) el.classList.add('visible'); }, i*300));
+}
+
+document.getElementById('answer-input').addEventListener('keydown', e => { if(e.key==='Enter') checkAnswer(); });
+updateTabs();
+renderTopics();
 </script>
-
 </body>
 </html>
