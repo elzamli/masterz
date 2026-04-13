@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MasterZ</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .phone {
+      background: white;
+      width: 340px;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    @media (min-width: 768px) {
+      .phone {
+        width: 700px;
+        padding: 32px;
+      }
+    }
+
+    /* --- מסכים --- */
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* --- מסך בית --- */
+    .header {
+      background: #E1F5EE;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .header h1 { font-size: 22px; color: #085041; }
+    .header p { font-size: 13px; color: #0F6E56; margin-top: 4px; }
+
+    .score-row { display: flex; gap: 8px; margin-bottom: 16px; }
+    .score-box {
+      flex: 1;
+      background: #f0f4f8;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+    .score-box span { display: block; font-size: 20px; font-weight: bold; color: #1a1a1a; }
+    .score-box small { font-size: 11px; color: #888; }
+
+    .subject-btn {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: right;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .subject-btn span { display: block; font-size: 15px; font-weight: bold; }
+    .subject-btn small { font-size: 12px; }
+
+    .btn-math { background: #E6F1FB; }
+    .btn-math span { color: #0C447C; }
+    .btn-math small { color: #185FA5; }
+
+    .btn-eng { background: #EEEDFE; }
+    .btn-eng span { color: #3C3489; }
+    .btn-eng small { color: #534AB7; }
+
+    .progress-bar-bg { background: #e0e0e0; border-radius: 4px; height: 6px; }
+    .progress-bar-fill { background: #1D9E75; border-radius: 4px; height: 6px; width: 60%; }
+    .progress-label { font-size: 10px; color: #888; text-align: center; margin-top: 6px; }
+
+    /* --- מסך נושאים --- */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .back-btn {
+      background: #f0f4f8;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      color: #555;
+    }
+    .screen-title { font-size: 15px; font-weight: bold; color: #1a1a1a; }
+
+    .tab-row { display: flex; gap: 6px; margin-bottom: 14px; }
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+    .tab-active-math { background: #E6F1FB; color: #0C447C; }
+    .tab-inactive { background: #f0f4f8; color: #888; }
+    .tab-active-eng { background: #EEEDFE; color: #3C3489; }
+
+    .topics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    @media (min-width: 768px) {
+      .topics-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    .topic-card {
+      border-radius: 8px;
+      padding: 12px;
+      cursor: pointer;
+      border: none;
+      text-align: right;
+    }
+    .topic-card .t-name { font-size: 13px; font-weight: bold; }
+    .topic-card .t-count { font-size: 11px; margin-top: 3px; }
+
+    .topic-math { background: #E6F1FB; }
+    .topic-math .t-name { color: #0C447C; }
+    .topic-math .t-count { color: #185FA5; }
+
+    .topic-eng { background: #EEEDFE; }
+    .topic-eng .t-name { color: #3C3489; }
+    .topic-eng .t-count { color: #534AB7; }
+  </style>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- מסך 1: בית -->
+  <div class="screen active" id="screen-home">
+    <div class="header">
+      <h1>MasterZ</h1>
+      <p>שלום! מה נתרגל היום?</p>
+    </div>
+
+    <div class="score-row">
+      <div class="score-box">
+        <span id="score">0</span>
+        <small>נקודות</small>
+      </div>
+      <div class="score-box">
+        <span>רמה 1</span>
+        <small>מתחיל</small>
+      </div>
+    </div>
+
+    <button class="subject-btn btn-math" onclick="goTo('screen-topics', 'math')">
+      <span>מתמטיקה</span>
+      <small>10 נושאים</small>
+    </button>
+
+    <button class="subject-btn btn-eng" onclick="goTo('screen-topics', 'eng')">
+      <span>אנגלית</span>
+      <small>8 נושאים</small>
+    </button>
+
+    <div style="margin-top: 16px;">
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill"></div>
+      </div>
+      <p class="progress-label">עוד 100 נק׳ לרמה 2</p>
+    </div>
+  </div>
+
+  <!-- מסך 2: בחירת נושא -->
+  <div class="screen" id="screen-topics">
+    <div class="top-bar">
+      <button class="back-btn" onclick="goTo('screen-home')">→ חזרה</button>
+      <p class="screen-title">בחר נושא</p>
+    </div>
+
+    <div class="tab-row">
+      <button class="tab" id="tab-math" onclick="switchTab('math')">מתמטיקה</button>
+      <button class="tab" id="tab-eng" onclick="switchTab('eng')">אנגלית</button>
+    </div>
+
+    <div class="topics-grid" id="topics-grid"></div>
+  </div>
+
+</div>
+
+<script>
+  const mathTopics = [
+    "משוואות", "שברים", "אחוזים", "יחס ופרופורציה",
+    "שלמים שליליים", "אלגברה", "גיאומטריה", "סטטיסטיקה",
+    "שטח והיקף", "חזקות"
+  ];
+
+  const engTopics = [
+    "אוצר מילים", "Present Simple", "Past Simple", "Future Tense",
+    "מילות שאלה", "הבנת הנקרא", "כתיבה יצירתית", "דקדוק"
+  ];
+
+  let currentTab = 'math';
+
+  function goTo(screenId, tab) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(screenId).classList.add('active');
+    if (tab) {
+      currentTab = tab;
+      renderTopics();
+      updateTabs();
+    }
+  }
+
+  function switchTab(tab) {
+    currentTab = tab;
+    renderTopics();
+    updateTabs();
+  }
+
+  function updateTabs() {
+    document.getElementById('tab-math').className = 'tab ' + (currentTab === 'math' ? 'tab-active-math' : 'tab-inactive');
+    document.getElementById('tab-eng').className = 'tab ' + (currentTab === 'eng' ? 'tab-active-eng' : 'tab-inactive');
+  }
+
+  function renderTopics() {
+    const topics = currentTab === 'math' ? mathTopics : engTopics;
+    const cls = currentTab === 'math' ? 'topic-math' : 'topic-eng';
+    const grid = document.getElementById('topics-grid');
+    grid.innerHTML = topics.map(t => `
+      <button class="topic-card ${cls}">
+        <p class="t-name">${t}</p>
+        <p class="t-count">5 רמות</p>
+      </button>
+    `).join('');
+  }
+
+  updateTabs();
+  renderTopics();
+</script>
+
+</body>
+</html>
